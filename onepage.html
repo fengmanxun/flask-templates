@@ -1,0 +1,237 @@
+<!-- onepage -->
+<!DOCTYPE html>
+<html>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width, user-scalable=no, minimal-ui">
+<title>{{data['basics']['name']}}</title>
+<style>
+    body {
+        background: #EEEEEE;
+        font: 12px"Times New Roman", Times, sans-serif;
+        line-height: 1.4;
+        margin: 40px 0
+    }
+
+    em {
+        color: #999
+    }
+
+    ul {
+        margin-bottom: 0
+    }
+
+    li {
+        margin-bottom: 2px
+    }
+
+    a {
+        text-decoration: none
+    }
+
+    #resume {
+        margin: 0 auto;
+        max-width: 600px;
+        padding: 80px 100px;
+        background: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 2px 2px 4px #aaa;
+        -webkit-box-shadow: 2px 2px 4px #aaa
+    }
+
+    .largeFont {
+        font-size: 20px
+    }
+
+    .smallFont {
+        font-size: 12px
+    }
+
+    .sectionBlock {
+        display: flex;
+        width: 100%
+    }
+
+    .sectionName {
+        width: 18%;
+        vertical-align: top;
+        display: inline-block
+    }
+
+    .sectionContent {
+        width: 80%;
+        vertical-align: top;
+        display: inline-block
+    }
+
+    .sectionContent ul {
+        padding-left: 20px;
+        margin-top: 6px;
+        list-style-type: circle
+    }
+
+    .sectionContent .title {
+        font-weight: bold
+    }
+
+    .sectionContent .date {
+        float: right
+    }
+
+    .sectionContent .separator {
+        height: 14px
+    }
+
+    .sectionLine {
+        border-style: dashed;
+        border-width: 1px;
+        border-color: #CFCFCF;
+        margin-top: 10px;
+        margin-bottom: 10px
+    }
+
+    .divider {
+        font-weight: bold;
+        margin-left: 5px;
+        margin-right: 5px
+    }
+
+    .skillBlock {
+        margin-bottom: 4px
+    }
+
+    .jobBlock {
+        page-break-inside: avoid
+    }
+
+    @media only screen and (max-width:40em) {
+        body {
+            margin: 0;
+            font-size: 14px
+        }
+
+        #resume {
+            margin: 0 auto;
+            max-width: 600px;
+            padding: 0.5em 1em;
+            border: none
+        }
+
+        .sectionContent {
+            width: 100%
+        }
+
+        .sectionContent .date {
+            padding-right: 2em
+        }
+
+        .sectionName {
+            width: auto
+        }
+
+        .largeFont {
+            font-size: 20px
+        }
+
+        .smallFont {
+            font-size: 14px
+        }
+    }
+</style>
+<link type=image/x-icon rel="shortcut icon" href=data:,>
+<meta http-equiv=content-security-policy
+    content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:;">
+<style>
+    img[src="data:,"],
+    source[src="data:,"] {
+        display: none !important
+    }
+</style>
+<script>
+    window.history.pushState({}, null, '.');
+    // window.onload = function () {
+    //     document.getElementById("my_audio").play();
+    // }
+    // function changeAudio() {
+    //     document.getElementById('my_audio').muted = !document.getElementById('my_audio').muted;
+    //     var elem = document.getElementById("audio_btn");
+    //     if (elem.innerHTML == "🔊") elem.innerHTML = "🔇";
+    //     else elem.innerHTML = "🔊";
+    // }
+    window.onload = function () {
+        document.getElementById("audio_btn").addEventListener("click", function () {
+            var audio = document.getElementById('my_audio');
+            if (this.className == 'is-playing') {
+                this.className = "";
+                this.innerHTML = "🔇"
+                audio.pause();
+            } else {
+                this.className = "is-playing";
+                this.innerHTML = "🔊";
+                audio.play();
+            }
+        });
+    }
+</script>
+</head>
+
+<body>
+    <audio id="my_audio" src="{{ url_for('static', filename='audio.wav') }}" loop="loop"></audio>
+    <button id="audio_btn" style="float: right;">🎧</button>
+
+    <div id=resume>
+        <div id=nameBlock class=largeFont> <span class=name> {{data['basics']['name']}}, </span> <span
+                class=label>{{data['basics']['label']}}</span> </div>
+        <div id=basicsBlock class=smallFont>
+            <div class=contactBlock>
+                <span class=website><a href="{{data['basics']['website']}}">{{data['basics']['website']}}</a></span>
+                <span class=divider>|</span>
+                <span class=email><a href="mailto:{{data['basics']['email']}}">{{data['basics']['email']}}</a></span>
+                <span class=divider>|</span>
+                <span class=address> {{data['basics']['location']['city']}},
+                    {{data['basics']['location']['countryCode']}} </span>
+            </div>
+            <div id=profilesBlock> {% for p in data['basics']['profiles'] %} <span class=url> <a
+                        href={{p['url']}}>{{p['network']}}</a> </span> <span class=divider> </span> {%endfor%} </div>
+        </div>
+        <div class=sectionLine></div>
+        <div id=summaryBlock class=sectionBlock>
+            <div class=sectionName> <span>SUMMARY</span> </div>
+            <div class=sectionContent> <span>{{data['basics']['summary']}} </span> </div>
+        </div>
+        <div class=sectionLine></div>
+        <div id=workBlock class=sectionBlock>
+            <div class=sectionName> <span>EXPERIENCE</span> </div>
+            <div class=sectionContent> {% for w in data['work'] %} <div class=jobBlock>
+                    <div class=blockHeader> <span class=title> , {{w['position']}} </span> <span class=date>
+                            {{w['startDate']}} — {{w['endDate']}} </span> </div>
+                    <div><a href={{w['website']}}>{{w['website']}}</a></div>
+                    <ul class=highlights>
+                        <li>{{w['summary']}}</li> {% for h in w['highlights'] %} <li>{{h}}</li> {%endfor%}
+                    </ul>
+                    <div class=separator></div>
+                </div> {%endfor%} </div>
+        </div>
+        <div class=sectionLine></div>
+        <div id=education class=sectionBlock>
+            <div class=sectionName> <span>EDUCATION</span> </div>
+            <div class=sectionContent> {% for e in data['education'] %} <div class=educationBlock> <span class=title>
+                        {{e['institution']}} </span> <span class=date> {{e['startDate']}} — {{e['endDate']}} </span>
+                    <div> {{e['studyType']}} - {{e['area']}} </div>
+                </div> {%endfor%} </div>
+        </div>
+        <div class=sectionLine></div>
+        <div id=skills class=sectionBlock>
+            <div class=sectionName> <span>SKILLS</span> </div>
+            <div class=sectionContent> {% for s in data['skills'] %} <div class=skillBlock> <span
+                        class=title>{{s['name']}} <em>({{s['level']}})</em>:</span> {%for k in s['keywords'] %}
+                    <span>{{k}}</span>, {%endfor%}
+                </div> {%endfor%} </div>
+        </div>
+        <div class=sectionLine></div>
+        <div id=interests class=sectionBlock>
+            <div class=sectionName> <span>INTERESTS</span> </div>
+            <div class=sectionContent> {%for i in data['interests'] %} <span class=name>{{i['name']}}</span><span>,
+                </span> {%endfor%} </div>
+            <div class=sectionLine></div>
+        </div>
+    </div>
