@@ -363,16 +363,36 @@
                         </div>
                     </div>
                 </section>
+                
                 <section class=content>
                     <div class=row>
                         <div class=content-cat> Location </div>
-                        <div class=content-text> {{data['basics']['location']['city']}}
-                            {{data['basics']['location']['countryCode']}} </div>
+                        <div class="content-text skills-listing"> 
+                            <p>
+                            {{data['basics']['location']['city']}},
+                            {{data['basics']['location']['countryCode']}} 
+                            </p>
+                        </div>
                     </div>
                 </section>
+                
+
                 <section class=content>
                     <div class=row>
-                        <div class=content-cat> Professional Skills Summary </div>
+                        <div class=content-cat> Summary </div>
+                        <div class="content-text skills-listing">
+                            <p>
+                                {{data['basics']['summary']}}
+                            </p>
+                        </div>
+                    </div>
+                </section>                
+                
+                
+                
+                <section class=content>
+                    <div class=row>
+                        <div class=content-cat> Professional Skills </div>
                         <div class="content-text skills-listing"> {% for s in data['skills'] %} <p> <span class=name>
                                     <strong> {{s['name']}} </strong> </span> <span>({{s['level']}}):</span> {% for k in
                                 s['keywords'] %} {{k}}, {%endfor%} </p> {%endfor%} </div>
